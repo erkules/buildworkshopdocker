@@ -1,0 +1,14 @@
+mkdir /var/tmp/BUILD
+apt get update && apt get install debootstrap
+debootstrap  --components=main,universe \
+ --include=apt-utils,ca-certificates,software-properties-common,wget,curl,unzip \
+ --arch=amd64 xenial /var/tmp/BUILD
+chroot /var/tmp/BUILD
+dpkg-divert --local --rename --add /usr/sbin/invoke-rc.d
+echo -e '#!/bin/bash\ntrue\n'  > /usr/sbin/invoke-rc.d
+chmod 700 /usr/sbin/invoke-rc.d
+apt-get clean
+exit
+
+tar -C /var/tmp/BUILD -c .   | docker import - mein/ubuntu:16.04
+
