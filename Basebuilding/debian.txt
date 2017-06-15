@@ -1,5 +1,5 @@
 mkdir /var/tmp/BUILD
-apt get update && apt get install debootstrap
+apt-get update && apt-get install debootstrap
 debootstrap  --components=main,universe \
  --include=apt-utils,ca-certificates,software-properties-common,wget,curl,unzip \
  --arch=amd64 xenial /var/tmp/BUILD
